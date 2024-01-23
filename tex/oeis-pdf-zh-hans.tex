@@ -1,0 +1,75 @@
+\documentclass{oeiscommon}
+\usepackage{ctex}
+
+
+\begin{document}
+
+\thispagestyle{empty}
+\newgeometry{vmargin=3cm}
+
+本文档包含了 \href{\oeis}{The On-Line Encyclopedia of Integer Sequences{\(^{\textregistered}\)} (OEIS{\(^{\textregistered}\)})} 中的部分数列.
+
+\paragraph{排序方式} 令 \(a\) 为删去原序列前导 \(0\) 后的序列, \(b\) 为删去 \(a\) 的前导 \(1\) 后得到的序列, 则:
+
+\begin{itemize}
+    \item 第一关键字是 \(b\)
+    \item 第二关键字是 \(a\) 的前导 \(1\) 长度 \(c_1\)
+    \item 第三关键字是原序列的前导 \(0\) 长度 \(c_0\)
+    \item 第四关键字是 OEIS 中对应的 ID (JSON 中的 \verb|number|, 不是 \verb|id|)
+\end{itemize}
+
+序列的前导 \(x\) 定义为: 从序列的首个元素开始依次向后, 直到遇到第一个非 \(x\) 元素为止这一段子序列, 如:
+
+\begin{itemize}
+    \item 序列 {\ttfamily 0,0,1,0,1,5} 的前导 \(0\) 是 {\ttfamily 0,0}
+    \item 序列 {\ttfamily 1,1,1,0,1,2,1,0} 的前导 \(1\) 是 {\ttfamily 1,1,1}
+\end{itemize}
+
+\paragraph{格式} \textbf{OEIS ID}\(\langle\)Offset\(\rangle\) \{\(c_0\),\(c_1\)\}\(b\) \textit{Description} \(\dagger\) Formula 1  \(\dagger\) Formula 2 ... \href{\oeis}{\P}
+
+若 \(c_0\) 或 \(c_1\) 为 \(0\) 则省略 \(c_0\) 或 \(c_1\), 若同时为 \(0\), 则省略 \{\(c_0\),\(c_1\)\} 部分
+
+\(b\) 对相邻的相同元素进行了压缩:
+
+{\ttfamily 2,2,2,2,2,3,3,3,4,4,5,10,10} \(\implies\) {\ttfamily 2:5,3:3,4:2,5,10:2}
+
+为控制篇幅, \(b\) 只保留压缩后的前 \(10\) 项
+
+公式部分按如下规则加以简化:
+
+\begin{itemize}
+    \item \(\dagger\) a(n) = xxx \(\implies\) \(\ddagger\) xxx 
+    \item \(\dagger\) G.f. xxx \(\implies\) \(\flat\) xxx 
+    \item \(\dagger\) E.g.f. xxx \(\implies\) \(\natural\) xxx 
+    \item \(\dagger\) Dirichlet g.f. xxx \(\implies\) \(\diamond\) xxx 
+\end{itemize}
+
+\paragraph{生成脚本} \href{\repo}{\repo}
+
+\textbf{注意}：本文档正文内容版权归 OEIS{\(^{\textregistered}\)} 所有，请遵循相关法律。
+
+\paragraph{OEIS{\(^{\textregistered}\)} 相关法律文件链接} \href{\oeislegaldoc}{\oeislegaldoc}
+
+\paragraph{以下为正文}
+
+\newpage
+\linespread{1.0}
+\newgeometry{includefoot,inner=1cm,outer=.5cm,vmargin=.5cm,footskip=12.0pt}
+\twocolumn
+\footnotesize
+\setcounter{page}{1}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[LE,RO]{\thepage}
+
+\input{oeis.tex}
+
+\newgeometry{includefoot,hmargin=1cm,vmargin=.5cm,footskip=12.0pt}
+\footnotesize
+\setcounter{page}{1}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\printindex
+
+\end{document}

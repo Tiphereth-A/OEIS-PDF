@@ -1,0 +1,73 @@
+\documentclass{oeiscommon}
+
+
+\begin{document}
+
+\thispagestyle{empty}
+
+This document contains some sequences from \href{\oeis}{The On-Line Encyclopedia of Integer Sequences{\(^{\textregistered}\)} (OEIS{\(^{\textregistered}\)})}.
+
+\paragraph{Ordering} Let \(a\) be the sequence after deleting the leading \(0\) of the original sequence, and \(b\) be the sequence after deleting the leading \(1\) of \(a\), then:
+
+\begin{itemize}
+    \item The first keyword is \(b\)
+    \item The second keyword is \(c_1\): the length of leading \(1\) of \(a\)
+    \item The third keyword is \(c_0\): the length of leading \(0\) of the original sequence
+    \item The forth keyword is ID in OEIS (\verb|number|, not \verb|id| in JSON)
+\end{itemize}
+
+The definition of ``leading \(x\) of a sequence'' is: The subsequence starts from the first element of the sequence and goes backwards until the first non-\(x\) element is encountered, for example:
+
+\begin{itemize}
+    \item The leading \(0\) of the sequence {\ttfamily 0,0,1,0,1,5} is {\ttfamily 0,0}
+    \item The leading \(1\) of the sequence {\ttfamily 1,1,1,0,1,2,1,0} is {\ttfamily 1,1,1}
+\end{itemize}
+
+\paragraph{Format} \textbf{OEIS ID}\(\langle\)Offset\(\rangle\) \{\(c_0\),\(c_1\)\}\(b\) \textit{Description} \(\dagger\) Formula 1  \(\dagger\) Formula 2 ... \href{\oeis}{\P}
+
+Ignore \(c_0\) (\(c_1\)) if \(c_0\) (\(c_1\)) is \(0\); ignore \{\(c_0\),\(c_1\)\} if \(c_0=c_1=0\)
+
+Compressed adjacent elements in \(b\):
+
+{\ttfamily 2,2,2,2,2,3,3,3,4,4,5,10,10} \(\implies\) {\ttfamily 2:5,3:3,4:2,5,10:2}
+
+To control the length, only the first \(10\) items in compressed \(b\) were retained
+
+The following transformation is applied to formulas:
+
+\begin{itemize}
+    \item \(\dagger\) a(n) = xxx \(\implies\) \(\ddagger\) xxx 
+    \item \(\dagger\) G.f. xxx \(\implies\) \(\flat\) xxx 
+    \item \(\dagger\) E.g.f. xxx \(\implies\) \(\natural\) xxx 
+    \item \(\dagger\) Dirichlet g.f. xxx \(\implies\) \(\diamond\) xxx 
+\end{itemize}
+
+\paragraph{Generate scripts} \href{\repo}{\repo}
+
+\textbf{Warning}: The body of this document is copyrighted by OEIS{\(^{\textregistered}\)}, please follow the relevant laws.
+
+\paragraph{OEIS{\(^{\textregistered}\)} legal documents} \href{\oeislegaldoc}{\oeislegaldoc}
+
+\paragraph{The following is all the sequences}
+
+\newpage
+\linespread{1.0}
+\newgeometry{includefoot,inner=1cm,outer=.5cm,vmargin=.5cm,footskip=12.0pt}
+\twocolumn
+\footnotesize
+\setcounter{page}{1}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[LE,RO]{\thepage}
+
+\input{oeis.tex}
+
+\newgeometry{includefoot,hmargin=1cm,vmargin=.5cm,footskip=12.0pt}
+\footnotesize
+\setcounter{page}{1}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\printindex
+
+\end{document}
