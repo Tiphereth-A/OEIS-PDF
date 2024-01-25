@@ -6,6 +6,8 @@
 
 由 [The On-Line Encyclopedia of Integer Sequences® (OEIS®)](https://oeis.org/) 的部分数列组成的 PDF 文档生成脚本。
 
+示例：<https://github.com/Tiphereth-A/OEIS-PDF/releases>
+
 ## 基本使用
 
 1. 将需要用于生成的数列内容以 JSON 格式存放于 `data\detail` 文件夹中。文件名称为数列 ID，内容格式与 OEIS 网站提供的 JSON 相同。

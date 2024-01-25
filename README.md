@@ -6,6 +6,8 @@
 
 Scrpits for generating PDF document of some sequences from [The On-Line Encyclopedia of Integer Sequences® (OEIS®)](https://oeis.org/).
 
+Demo: <https://github.com/Tiphereth-A/OEIS-PDF/releases>
+
 ## Basic usage
 
 1. List the content to be included in the documents in JSON format in the `data\detail` folder. The file name is ID of the sequence, and the content format is the same as JSON provided on the OEIS website.
