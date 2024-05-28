@@ -3,7 +3,8 @@ import re
 RE_BRACKET_NEEDS_LSTRIP = re.compile(r'\s+([(\[{])')
 RE_BRACKET_NEEDS_RSTRIP = re.compile(r'([)\]}])\s+')
 RE_RELATION = re.compile(r'\s*([<>:!=]=|=|<|>)\s*')
-RE_FORMULA_AN = re.compile(r'^a\s*\(\s*n\s*\)\s*=\s*', flags=re.IGNORECASE)
+RE_FORMULA_AN = re.compile(r'^(?:empirical: )a\s*\(\s*n\s*\)\s*=\s*', flags=re.IGNORECASE)
+RE_FORMULA_REC = re.compile(r'^recurrence:?\s*', flags=re.IGNORECASE)
 RE_FORMULA_GF = re.compile(r'^g\.f\.\s*:?\s*', flags=re.IGNORECASE)
 RE_FORMULA_EGF = re.compile(r'^e\.g\.f\.\s*:?\s*', flags=re.IGNORECASE)
 RE_FORMULA_DGF = re.compile(
@@ -40,6 +41,7 @@ class CommandGenerator:
 
         self.formula: list[str] = []
         self.formula_an: list[str] = []
+        self.formula_rec: list[str] = []
         self.formula_gf: list[str] = []
         self.formula_egf: list[str] = []
         self.formula_dgf: list[str] = []
@@ -48,6 +50,10 @@ class CommandGenerator:
             now_formula = re.sub(RE_AUTHOR_DATE_IN_THE_END, '', now_formula)
             if re.search(RE_FORMULA_AN, now_formula):
                 self.formula_an.append(re.sub(RE_FORMULA_AN, '', now_formula))
+                continue
+            if re.search(RE_FORMULA_REC, now_formula):
+                self.formula_rec.append(
+                    re.sub(RE_FORMULA_REC, '', now_formula))
                 continue
             if re.search(RE_FORMULA_GF, now_formula):
                 self.formula_gf.append(re.sub(RE_FORMULA_GF, '', now_formula))
@@ -121,6 +127,7 @@ class CommandGenerator:
                          rf'{{\ttfamily {self.__seq_data()}}}',
                          rf'\textit{{{self.__plain_text(self.name)}}}'] +
                         [rf'\(\ddagger\) {self.__plain_text(i)}' for i in self.formula_an] +
+                        [rf'\(\circlearrowleft\) {self.__plain_text(i)}' for i in self.formula_rec] +
                         [rf'\(\flat\) {self.__plain_text(i)}' for i in self.formula_gf] +
                         [rf'\(\natural\) {self.__plain_text(i)}' for i in self.formula_egf] +
                         [rf'\(\diamond\) {self.__plain_text(i)}' for i in self.formula_dgf] +
