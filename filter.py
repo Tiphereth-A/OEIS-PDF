@@ -77,9 +77,25 @@ def _filter_results(folder):
                         __remove_cnt += 1
                         __flag = True
                     else:
+                        # merge multi-line formula
+                        formula_list: list[str] = []
+                        multiline_formula: str = ''
+                        for formula in now_json['formula']:
+                            if formula.endswith('(Start)'):
+                                multiline_formula += formula
+                            elif formula.endswith('(End)'):
+                                formula_list.append(multiline_formula+formula)
+                                multiline_formula = ''
+                            elif multiline_formula:
+                                multiline_formula += formula
+                            else:
+                                formula_list.append(formula)
+
+                        if multiline_formula:
+                            raise RuntimeError('Parse error')
+
                         new_formulas: list[str] = list(
-                            filter(lambda x: all(i in __id_set for i in re.findall(RE_OEIS_ID, x)),
-                                   now_json['formula']))
+                            filter(lambda x: all(i in __id_set for i in re.findall(RE_OEIS_ID, x)), formula_list))
                         if new_formulas:
                             if now_json['formula'] != new_formulas:
                                 __clean_cnt += 1
